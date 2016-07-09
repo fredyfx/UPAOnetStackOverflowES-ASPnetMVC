@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Enroll";
+}
+
+@using (Html.BeginForm())
+{
+    <h2>Enroll</h2>
+
+    <p>
+        Selecciona el curso
+    </p>
+    @Html.DropDownList("Curso", new SelectList(ViewBag.listaCursos, "ID", "Nombre"))
+    <p>
+        control K + control D // formato de manera automatica
+        Selecciona el estudiante
+    </p>
+    @Html.DropDownList("Estudiante", new SelectList(ViewBag.listaEstudiantes, "ID", "Nombres"))
+    <input type="submit" value="Create" class="btn btn-default" />
+}

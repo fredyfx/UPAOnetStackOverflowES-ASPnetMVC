@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[Estudiante]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+	[Nombres] NVARCHAR(100) NOT NULL, 
+	[Apellidos] NVARCHAR(100) NULL, 
+	[Genero] NCHAR(1) NULL, 
+	[Email] NVARCHAR(20) NULL, 
+	[DNI] INT NULL, 
+	[Direccion] NVARCHAR(100) NULL, 
+	[CodigoGenerado] UNIQUEIDENTIFIER NULL
+)

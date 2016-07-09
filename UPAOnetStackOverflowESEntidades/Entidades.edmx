@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="UPAOnetStackOverflowESBaseDeDatosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cursos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Capacidad" Type="int" />
+        </EntityType>
+        <EntityType Name="EnlaceEstudianteCurso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EstudianteID" Type="int" Nullable="false" />
+          <Property Name="CursoID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estudiante">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombres" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Apellidos" Type="nvarchar" MaxLength="100" />
+          <Property Name="Genero" Type="nchar" MaxLength="1" />
+          <Property Name="Email" Type="nvarchar" MaxLength="20" />
+          <Property Name="DNI" Type="int" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="100" />
+          <Property Name="CodigoGenerado" Type="uniqueidentifier" />
+        </EntityType>
+        <Association Name="FK_EnlaceEstudianteCurso_Curso">
+          <End Role="Cursos" Type="Self.Cursos" Multiplicity="1" />
+          <End Role="EnlaceEstudianteCurso" Type="Self.EnlaceEstudianteCurso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cursos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnlaceEstudianteCurso">
+              <PropertyRef Name="CursoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EnlaceEstudianteCurso_Estudiante">
+          <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="1" />
+          <End Role="EnlaceEstudianteCurso" Type="Self.EnlaceEstudianteCurso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiante">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnlaceEstudianteCurso">
+              <PropertyRef Name="EstudianteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UPAOnetStackOverflowESBaseDeDatosModelStoreContainer">
+          <EntitySet Name="Cursos" EntityType="Self.Cursos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EnlaceEstudianteCurso" EntityType="Self.EnlaceEstudianteCurso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estudiante" EntityType="Self.Estudiante" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EnlaceEstudianteCurso_Curso" Association="Self.FK_EnlaceEstudianteCurso_Curso">
+            <End Role="Cursos" EntitySet="Cursos" />
+            <End Role="EnlaceEstudianteCurso" EntitySet="EnlaceEstudianteCurso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EnlaceEstudianteCurso_Estudiante" Association="Self.FK_EnlaceEstudianteCurso_Estudiante">
+            <End Role="Estudiante" EntitySet="Estudiante" />
+            <End Role="EnlaceEstudianteCurso" EntitySet="EnlaceEstudianteCurso" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UPAOnetStackOverflowESBaseDeDatosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Estudiante">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombres" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Genero" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DNI" Type="Int32" />
+          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CodigoGenerado" Type="Guid" />
+          <NavigationProperty Name="EnlaceEstudianteCursoes" Relationship="UPAOnetStackOverflowESBaseDeDatosModel.FK_EnlaceEstudianteCurso_Estudiante" FromRole="Estudiante" ToRole="EnlaceEstudianteCurso" />
+        </EntityType>
+        <EntityContainer Name="UPAOnetStackOverflowESBaseDeDatosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Estudiantes" EntityType="Self.Estudiante" />
+          <EntitySet Name="Cursos" EntityType="UPAOnetStackOverflowESBaseDeDatosModel.Curso" />
+          <EntitySet Name="EnlaceEstudianteCursoes" EntityType="UPAOnetStackOverflowESBaseDeDatosModel.EnlaceEstudianteCurso" />
+          <AssociationSet Name="FK_EnlaceEstudianteCurso_Curso" Association="UPAOnetStackOverflowESBaseDeDatosModel.FK_EnlaceEstudianteCurso_Curso">
+            <End Role="Curso" EntitySet="Cursos" />
+            <End Role="EnlaceEstudianteCurso" EntitySet="EnlaceEstudianteCursoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EnlaceEstudianteCurso_Estudiante" Association="UPAOnetStackOverflowESBaseDeDatosModel.FK_EnlaceEstudianteCurso_Estudiante">
+            <End Role="Estudiante" EntitySet="Estudiantes" />
+            <End Role="EnlaceEstudianteCurso" EntitySet="EnlaceEstudianteCursoes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Capacidad" Type="Int32" />
+          <NavigationProperty Name="EnlaceEstudianteCursoes" Relationship="UPAOnetStackOverflowESBaseDeDatosModel.FK_EnlaceEstudianteCurso_Curso" FromRole="Curso" ToRole="EnlaceEstudianteCurso" />
+        </EntityType>
+        <EntityType Name="EnlaceEstudianteCurso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EstudianteID" Type="Int32" Nullable="false" />
+          <Property Name="CursoID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Curso" Relationship="UPAOnetStackOverflowESBaseDeDatosModel.FK_EnlaceEstudianteCurso_Curso" FromRole="EnlaceEstudianteCurso" ToRole="Curso" />
+          <NavigationProperty Name="Estudiante" Relationship="UPAOnetStackOverflowESBaseDeDatosModel.FK_EnlaceEstudianteCurso_Estudiante" FromRole="EnlaceEstudianteCurso" ToRole="Estudiante" />
+        </EntityType>
+        <Association Name="FK_EnlaceEstudianteCurso_Curso">
+          <End Type="UPAOnetStackOverflowESBaseDeDatosModel.Curso" Role="Curso" Multiplicity="1" />
+          <End Type="UPAOnetStackOverflowESBaseDeDatosModel.EnlaceEstudianteCurso" Role="EnlaceEstudianteCurso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnlaceEstudianteCurso">
+              <PropertyRef Name="CursoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EnlaceEstudianteCurso_Estudiante">
+          <End Type="UPAOnetStackOverflowESBaseDeDatosModel.Estudiante" Role="Estudiante" Multiplicity="1" />
+          <End Type="UPAOnetStackOverflowESBaseDeDatosModel.EnlaceEstudianteCurso" Role="EnlaceEstudianteCurso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiante">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnlaceEstudianteCurso">
+              <PropertyRef Name="EstudianteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UPAOnetStackOverflowESBaseDeDatosModelStoreContainer" CdmEntityContainer="UPAOnetStackOverflowESBaseDeDatosEntities">
+          <EntitySetMapping Name="Estudiantes">
+            <EntityTypeMapping TypeName="UPAOnetStackOverflowESBaseDeDatosModel.Estudiante">
+              <MappingFragment StoreEntitySet="Estudiante">
+                <ScalarProperty Name="CodigoGenerado" ColumnName="CodigoGenerado" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cursos">
+            <EntityTypeMapping TypeName="UPAOnetStackOverflowESBaseDeDatosModel.Curso">
+              <MappingFragment StoreEntitySet="Cursos">
+                <ScalarProperty Name="Capacidad" ColumnName="Capacidad" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EnlaceEstudianteCursoes">
+            <EntityTypeMapping TypeName="UPAOnetStackOverflowESBaseDeDatosModel.EnlaceEstudianteCurso">
+              <MappingFragment StoreEntitySet="EnlaceEstudianteCurso">
+                <ScalarProperty Name="CursoID" ColumnName="CursoID" />
+                <ScalarProperty Name="EstudianteID" ColumnName="EstudianteID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
